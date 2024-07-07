@@ -132,7 +132,7 @@ print(fourth_row)
 for i in range(1000):
     x = i
     y = x**3*a+x**2*b+c*x+d
-    pyg.draw.circle(screen, black, (x,y+y_offset), 3)
+    pyg.draw.circle(screen, black, (x+x_offset,y+y_offset), 3)
     pyg.display.update()
 while running:
     for event in pyg.event.get():
