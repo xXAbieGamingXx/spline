@@ -6,7 +6,7 @@ clock = pyg.time.Clock()
 running = True
 clicks = 0
 x_offset = 1000 # wanted values of 0 
-y_offset = 0
+y_offset = 1000
 positions = []
 starting_point = []
 ending_point = []
@@ -67,9 +67,8 @@ points = [starting_point, second_point, third_point, ending_point]
 for point in points:
     if point[0] < x_offset:
         x_offset = point[0]
-    if point[1] > y_offset:
+    if point[1] < y_offset:
         y_offset = point[1]
-y_offset = 1000-y_offset
 #first_row = [(starting_point[0]-x_offset)**3, (starting_point[0]-x_offset)**2, starting_point[0]-x_offset, starting_point[1]-y_offset, starting_point[1]-y_offset]
 #unneeded because d = y1
 d = starting_point[1]-y_offset
@@ -90,20 +89,20 @@ fourth_row = [fourth_row[0]-second_row[0]*factor, fourth_row[1]-second_row[1]*fa
 
 # lead with 1
 factor = 1/second_row[0]
-second_row = [int(second_row[0]*factor), second_row[1]*factor, second_row[2]*factor, second_row[3]*factor, second_row[4]*factor]
+second_row = [second_row[0]*factor, second_row[1]*factor, second_row[2]*factor, second_row[3]*factor, second_row[4]*factor]
 
 # clear second pivot column
 factor = fourth_row[1]/third_row[1]
 
-fourth_row = [0, int(fourth_row[1]-third_row[1]*factor), fourth_row[2]-third_row[2]*factor, fourth_row[3]-third_row[3]*factor, fourth_row[4]-third_row[4]*factor]
+fourth_row = [fourth_row[0]-third_row[0]*factor, fourth_row[1]-third_row[1]*factor, fourth_row[2]-third_row[2]*factor, fourth_row[3]-third_row[3]*factor, fourth_row[4]-third_row[4]*factor]
 
 # lead with 1
 factor = 1/third_row[1]
-third_row = [0, 1, third_row[2]*factor, third_row[3]*factor, third_row[4]*factor]
+third_row = [third_row[0]*factor, third_row[1]*factor, third_row[2]*factor, third_row[3]*factor, third_row[4]*factor]
 
 # lead with 1
 factor = 1/fourth_row[2]
-fourth_row = [0, 0, 1, fourth_row[3]*factor, fourth_row[4]*factor]
+fourth_row = [fourth_row[0]*factor, fourth_row[1]*factor, fourth_row[2]*factor, fourth_row[3]*factor, fourth_row[4]*factor]
 print("made pivots")
 print(second_row)
 print(third_row)
@@ -111,13 +110,13 @@ print(fourth_row)
 
 # get rid of nasty stuff above the pivots
 factor = third_row[2]/fourth_row[2]
-third_row = [0, 1, third_row[2]-fourth_row[2]*factor, third_row[3]-fourth_row[3]*factor, third_row[4]-fourth_row[4]*factor]
+third_row = [third_row[0]-fourth_row[0]*factor, third_row[1]-fourth_row[1]*factor, third_row[2]-fourth_row[2]*factor, third_row[3]-fourth_row[3]*factor, third_row[4]-fourth_row[4]*factor]
 
 factor = second_row[2]/fourth_row[2]
-second_row = [1, second_row[1]-fourth_row[1]*factor, second_row[2]-fourth_row[2]*factor, second_row[3]-fourth_row[3]*factor, second_row[4]-fourth_row[4]*factor]
+second_row = [second_row[0]-fourth_row[0]*factor, second_row[1]-fourth_row[1]*factor, second_row[2]-fourth_row[2]*factor, second_row[3]-fourth_row[3]*factor, second_row[4]-fourth_row[4]*factor]
 
 factor = second_row[1]/third_row[1]
-second_row = [1, int(second_row[1]-fourth_row[1]*factor), 0, second_row[3]-fourth_row[3]*factor, second_row[4]-fourth_row[4]*factor]
+second_row = [second_row[0]-third_row[0]*factor, second_row[1]-third_row[1]*factor, second_row[2]-third_row[2]*factor, second_row[3]-third_row[3]*factor, second_row[4]-third_row[4]*factor]
 
 # find a b and c
 a = second_row[4]-second_row[3]
