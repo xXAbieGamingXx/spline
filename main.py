@@ -127,12 +127,18 @@ print("reduced row echelon form")
 print(second_row)
 print(third_row)
 print(fourth_row)
-
+largest_x = 0
+for i in range(4):
+    if positions[i][0]-x_offset > largest_x:
+        largest_x = positions[i][0]-x_offset
 for i in range(1000):
     x = i
     y = x**3*a+x**2*b+c*x+d
-    pyg.draw.circle(screen, black, (x+x_offset,y+y_offset), 3)
-    pyg.display.update()
+    if x <= largest_x:
+        pyg.draw.circle(screen, black, (x+x_offset,y+y_offset), 3)
+        pyg.display.update()
+    else:
+        break
 while running:
     for event in pyg.event.get():
         if event.type == pyg.KEYDOWN and event.key == pyg.K_DELETE:
